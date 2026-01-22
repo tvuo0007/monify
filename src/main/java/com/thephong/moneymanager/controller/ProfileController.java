@@ -55,4 +55,10 @@ public class ProfileController {
             ));
         }
     }
+    
+    // Test auth
+    @GetMapping("/test-auth")
+    public ResponseEntity<String> checkAuth() {
+        return ResponseEntity.ok("Auth is successful!");
+    }
 }

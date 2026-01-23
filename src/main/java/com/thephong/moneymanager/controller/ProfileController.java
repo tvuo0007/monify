@@ -49,16 +49,9 @@ public class ProfileController {
             Map<String, Object> response = profileService.authenticateAndGenerateToken(authDTO);
             return ResponseEntity.ok(response);
         } catch (Exception e) {
-            System.out.println("Bug here");
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Map.of(
                     "message", e.getMessage()
             ));
         }
-    }
-    
-    // Test auth
-    @GetMapping("/test-auth")
-    public ResponseEntity<String> checkAuth() {
-        return ResponseEntity.ok("Auth is successful!");
     }
 }

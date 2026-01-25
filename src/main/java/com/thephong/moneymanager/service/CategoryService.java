@@ -1,9 +1,8 @@
 package com.thephong.moneymanager.service;
 
-import org.springframework.http.HttpStatus;
-import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
+import java.util.List;
 
+import org.springframework.stereotype.Service;
 import com.thephong.moneymanager.dto.CategoryDTO;
 import com.thephong.moneymanager.entity.CategoryEntity;
 import com.thephong.moneymanager.entity.ProfileEntity;
@@ -20,7 +19,7 @@ public class CategoryService {
     public CategoryDTO saveCategory(CategoryDTO categoryDTO) {
         ProfileEntity profile = profileService.getCurrentProfile();
         if (categoryRepository.existsByNameAndProfileId(categoryDTO.getName(), profile.getId())) {
-            throw new ResponseStatusException(HttpStatus.CONFLICT, "Category with this name already exists");
+            throw new RuntimeException("Category with this name already exists");
         }
 
         CategoryEntity newCategory = toEntity(categoryDTO, profile);
@@ -48,5 +47,27 @@ public class CategoryService {
                             .type(categoryEntity.getType())
                             .build();
 
+    }
+
+    public List<CategoryDTO> getCategoriesForCurrentUser() {
+        ProfileEntity profile = profileService.getCurrentProfile();
+        List<CategoryEntity> categories = categoryRepository.findByProfileId(profile.getId());
+        return categories.stream().map(this::toDTO).toList();
+    }
+
+    public List<CategoryDTO> getCategoriesByTypeForCurrentUser(String type) {
+        ProfileEntity profile = profileService.getCurrentProfile();
+        List<CategoryEntity> categories = categoryRepository.findByTypeAndProfileId(type, profile.getId());
+        return categories.stream().map(this::toDTO).toList();
+    }
+
+    public CategoryDTO updateCategory(Long categoryId, CategoryDTO dto) {
+        ProfileEntity profile = profileService.getCurrentProfile();
+        CategoryEntity existingCategory = categoryRepository.findByIdAndProfileId(categoryId, profile.getId())
+                                            .orElseThrow(() -> new RuntimeException("Category not found or not accessible"));
+        existingCategory.setName(dto.getName());
+        existingCategory.setIcon(dto.getIcon());
+        existingCategory = categoryRepository.save(existingCategory);
+        return toDTO(existingCategory);
     }
 }

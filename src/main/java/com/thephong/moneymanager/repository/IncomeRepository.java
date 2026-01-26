@@ -30,6 +30,6 @@ public interface IncomeRepository extends JpaRepository<IncomeEntity, Long>{
         Sort sort
     );
 
-    @Query(value = "select * from tbl_incomes where profile_id = ?1 and data between ?2 and ?3", nativeQuery = true)
+    @Query(value = "select * from tbl_incomes where profile_id = ?1 and date between ?2 and ?3", nativeQuery = true)
     List<IncomeEntity> findByProfileIdAndDateBetween(Long profileId, LocalDate startDate, LocalDate endDate);
 }

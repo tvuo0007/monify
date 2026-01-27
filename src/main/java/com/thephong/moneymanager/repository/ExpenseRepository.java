@@ -33,4 +33,8 @@ public interface ExpenseRepository extends JpaRepository<ExpenseEntity, Long>{
 
     @Query(value = "select * from tbl_expenses where profile_id = ?1 and date between ?2 and ?3", nativeQuery = true)
     List<ExpenseEntity> findByProfileIdAndDateBetween(Long profileId, LocalDate startDate, LocalDate endDate);
+
+    // Queries for finding expenses before a specific date
+    @Query("select e from ExpenseEntity e join fetch e.category where e.profile.id = :profileId and e.date <= :date")
+    List<ExpenseEntity> findByProfileIdAndDateLessThanEqual(Long profileId, LocalDate date);
 }

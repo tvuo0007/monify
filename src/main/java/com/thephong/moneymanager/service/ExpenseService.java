@@ -1,5 +1,6 @@
 package com.thephong.moneymanager.service;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -48,6 +49,18 @@ public class ExpenseService {
             throw new RuntimeException("Unauthorized to delete this expense");
         }
         expenseRepository.delete(expense);
+    }
+
+    public List<ExpenseDTO> getLatest5ExpensesForCurrentUser() {
+        ProfileEntity profile = profileService.getCurrentProfile();
+        List<ExpenseEntity> expenseList = expenseRepository.findTop5ByProfileIdOrderByDateDesc(profile.getId());
+        return expenseList.stream().map(this::toDTO).toList();
+    }
+
+    public BigDecimal getTotalExpensesForCurrentUser() {
+        ProfileEntity profile = profileService.getCurrentProfile();
+        BigDecimal totalExpenses = expenseRepository.findTotalExpenseByProfileId(profile.getId());
+        return totalExpenses != null ? totalExpenses : BigDecimal.ZERO;
     }
 
     private ExpenseEntity toEntity(ExpenseDTO expenseDTO, ProfileEntity profileEntity, CategoryEntity categoryEntity) {

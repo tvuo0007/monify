@@ -1,5 +1,6 @@
 package com.thephong.moneymanager.service;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -49,6 +50,18 @@ public class IncomeService {
             throw new RuntimeException("Unauthorized to delete this income");
         }
         incomeRepository.delete(income);
+    }
+
+    public List<IncomeDTO> getLatest5IncomesForCurrentUser() {
+        ProfileEntity profile = profileService.getCurrentProfile();
+        List<IncomeEntity> incomeList = incomeRepository.findTop5ByProfileIdOrderByDateDesc(profile.getId());
+        return incomeList.stream().map(this::toDTO).toList();
+    }
+
+    public BigDecimal getTotalIncomesForCurrentUser() {
+        ProfileEntity profile = profileService.getCurrentProfile();
+        BigDecimal totalIncomes = incomeRepository.findTotalIncomeByProfileId(profile.getId());
+        return totalIncomes != null ? totalIncomes : BigDecimal.ZERO;
     }
 
     private IncomeEntity toEntity(IncomeDTO incomeDTO, ProfileEntity profileEntity, CategoryEntity categoryEntity) {

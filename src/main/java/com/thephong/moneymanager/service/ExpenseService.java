@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.thephong.moneymanager.dto.ExpenseDTO;
@@ -61,6 +62,19 @@ public class ExpenseService {
         ProfileEntity profile = profileService.getCurrentProfile();
         BigDecimal totalExpenses = expenseRepository.findTotalExpenseByProfileId(profile.getId());
         return totalExpenses != null ? totalExpenses : BigDecimal.ZERO;
+    }
+
+    // filter expenses
+    public List<ExpenseDTO> filterExpenses(LocalDate startDate, LocalDate endDate, String keyword, Sort sort) {
+        ProfileEntity profile = profileService.getCurrentProfile();
+        List<ExpenseEntity> expenseList = expenseRepository.findByProfileIdAndDateBetweenAndNameContainingIgnoreCase(
+            profile.getId(),
+            startDate,
+            endDate,
+            keyword,
+            sort
+        );
+        return expenseList.stream().map(this::toDTO).toList();
     }
 
     private ExpenseEntity toEntity(ExpenseDTO expenseDTO, ProfileEntity profileEntity, CategoryEntity categoryEntity) {

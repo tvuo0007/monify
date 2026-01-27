@@ -1,0 +1,323 @@
+# 💰 Money Manager - Backend API
+
+A robust and secure RESTful API for personal finance management, built with Spring Boot 4.0 and modern Java practices. This backend service provides comprehensive expense and income tracking capabilities with JWT-based authentication, email notifications, and data export functionality.
+
+[![Java](https://img.shields.io/badge/Java-25-orange?style=flat&logo=java)](https://www.oracle.com/java/)
+[![Spring Boot](https://img.shields.io/badge/Spring%20Boot-4.0.1-brightgreen?style=flat&logo=spring)](https://spring.io/projects/spring-boot)
+[![MySQL](https://img.shields.io/badge/MySQL-8.0+-blue?style=flat&logo=mysql)](https://www.mysql.com/)
+[![License](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+
+## 🎯 Key Features
+
+### Core Functionality
+- **Financial Transaction Management**: Track expenses and income with detailed categorization
+- **Dashboard Analytics**: Real-time financial insights and transaction summaries
+- **Category Management**: Custom category creation and organization for better tracking
+- **User Profile Management**: Comprehensive user account and preference management
+- **Advanced Filtering**: Filter transactions by date, category, amount, and other criteria
+- **Data Export**: Export financial data to Excel format for external analysis
+
+### Security & Authentication
+- **JWT Authentication**: Secure token-based authentication system
+- **Password Encryption**: BCrypt password hashing for enhanced security
+- **Email Verification**: Account activation via email verification
+- **Session Management**: Stateless REST API with JWT token management
+- **CORS Configuration**: Cross-origin resource sharing for frontend integration
+
+### Technical Highlights
+- **RESTful API Design**: Clean and intuitive API endpoints following REST principles
+- **DTO Pattern**: Data Transfer Objects for clean separation of concerns
+- **Service Layer Architecture**: Well-structured business logic separation
+- **JPA/Hibernate**: Efficient database operations with ORM
+- **Email Service Integration**: Automated email notifications using SMTP
+
+## 🛠️ Tech Stack
+
+### Backend Framework
+- **Spring Boot 4.0.1** - Application framework
+- **Spring Web MVC** - RESTful web services
+- **Spring Data JPA** - Data persistence layer
+- **Spring Security** - Authentication and authorization
+- **Spring Mail** - Email service integration
+
+### Database & Persistence
+- **MySQL** - Primary relational database
+- **Hibernate** - ORM implementation
+- **JPA** - Java Persistence API
+
+### Security & Authentication
+- **JWT (JSON Web Tokens)** - Token-based authentication
+- **BCrypt** - Password encryption
+- **JJWT (io.jsonwebtoken)** - JWT implementation library
+
+### Additional Libraries
+- **Lombok** - Boilerplate code reduction
+- **Apache POI** - Excel file generation and manipulation
+- **Maven** - Dependency management and build tool
+
+## 📋 Prerequisites
+
+Before running this application, ensure you have the following installed:
+
+- **Java Development Kit (JDK) 25** or higher
+- **Apache Maven 3.6+** for dependency management
+- **MySQL 8.0+** database server
+- **Git** for version control
+
+## 🚀 Getting Started
+
+### 1. Clone the Repository
+```bash
+git clone <repository-url>
+cd moneymanager
+```
+
+### 2. Database Setup
+Create a MySQL database:
+```sql
+CREATE DATABASE moneymanager;
+```
+
+### 3. Configure Application Properties
+Update `src/main/resources/application.properties`:
+```properties
+# Database Configuration
+spring.datasource.url=jdbc:mysql://localhost:3306/moneymanager
+spring.datasource.username=your_username
+spring.datasource.password=your_password
+
+# Email Configuration (using Brevo SMTP)
+spring.mail.username=${BREVO_USERNAME}
+spring.mail.password=${BREVO_PASSWORD}
+spring.mail.properties.mail.smtp.from=${BREVO_FROM_EMAIL}
+
+# JWT Secret Key (generate your own secret)
+jwt.secret=your_jwt_secret_key
+```
+
+### 4. Set Environment Variables
+Create environment variables for sensitive data:
+```bash
+export BREVO_USERNAME=your_email_username
+export BREVO_PASSWORD=your_email_password
+export BREVO_FROM_EMAIL=your_sender_email
+```
+
+### 5. Build the Application
+```bash
+mvn clean install
+```
+
+### 6. Run the Application
+```bash
+mvn spring-boot:run
+```
+
+The API will start running at `http://localhost:8080/api/v1.0`
+
+## 📡 API Endpoints
+
+### Authentication
+| Method | Endpoint | Description | Auth Required |
+|--------|----------|-------------|---------------|
+| POST | `/api/v1.0/register` | Register new user | ❌ |
+| POST | `/api/v1.0/login` | User login | ❌ |
+| POST | `/api/v1.0/activate` | Activate account | ❌ |
+| GET | `/api/v1.0/status` | API health check | ❌ |
+
+### Dashboard
+| Method | Endpoint | Description | Auth Required |
+|--------|----------|-------------|---------------|
+| GET | `/api/v1.0/dashboard` | Get dashboard analytics | ✅ |
+
+### Expenses
+| Method | Endpoint | Description | Auth Required |
+|--------|----------|-------------|---------------|
+| POST | `/api/v1.0/expenses` | Add new expense | ✅ |
+| GET | `/api/v1.0/expenses` | Get all expenses | ✅ |
+| GET | `/api/v1.0/expenses/{id}` | Get expense by ID | ✅ |
+| DELETE | `/api/v1.0/expenses/{id}` | Delete expense | ✅ |
+
+### Income
+| Method | Endpoint | Description | Auth Required |
+|--------|----------|-------------|---------------|
+| POST | `/api/v1.0/income` | Add new income | ✅ |
+| GET | `/api/v1.0/income` | Get all income | ✅ |
+| GET | `/api/v1.0/income/{id}` | Get income by ID | ✅ |
+| DELETE | `/api/v1.0/income/{id}` | Delete income | ✅ |
+
+### Categories
+| Method | Endpoint | Description | Auth Required |
+|--------|----------|-------------|---------------|
+| POST | `/api/v1.0/categories` | Create category | ✅ |
+| GET | `/api/v1.0/categories` | Get all categories | ✅ |
+| GET | `/api/v1.0/categories/{id}` | Get category by ID | ✅ |
+| PUT | `/api/v1.0/categories/{id}` | Update category | ✅ |
+
+### Profile
+| Method | Endpoint | Description | Auth Required |
+|--------|----------|-------------|---------------|
+| GET | `/api/v1.0/profile` | Get user profile | ✅ |
+| PUT | `/api/v1.0/profile` | Update profile | ✅ |
+
+### Filters
+| Method | Endpoint | Description | Auth Required |
+|--------|----------|-------------|---------------|
+| POST | `/api/v1.0/filter` | Filter transactions | ✅ |
+
+## 🏗️ Project Structure
+
+```
+moneymanager/
+├── src/
+│   ├── main/
+│   │   ├── java/com/thephong/moneymanager/
+│   │   │   ├── config/              # Security and application configurations
+│   │   │   │   └── SecurityConfig.java
+│   │   │   ├── controller/          # REST API controllers
+│   │   │   │   ├── CategoryController.java
+│   │   │   │   ├── DashboardController.java
+│   │   │   │   ├── ExpenseController.java
+│   │   │   │   ├── FilterController.java
+│   │   │   │   ├── HomeController.java
+│   │   │   │   ├── IncomeController.java
+│   │   │   │   └── ProfileController.java
+│   │   │   ├── dto/                 # Data Transfer Objects
+│   │   │   │   ├── AuthDTO.java
+│   │   │   │   ├── CategoryDTO.java
+│   │   │   │   ├── ExpenseDTO.java
+│   │   │   │   ├── FilterDTO.java
+│   │   │   │   ├── IncomeDTO.java
+│   │   │   │   ├── ProfileDTO.java
+│   │   │   │   └── RecentTransactionDTO.java
+│   │   │   ├── entity/              # JPA Entities
+│   │   │   │   ├── CategoryEntity.java
+│   │   │   │   ├── ExpenseEntity.java
+│   │   │   │   ├── IncomeEntity.java
+│   │   │   │   └── ProfileEntity.java
+│   │   │   ├── repository/          # Data access layer
+│   │   │   │   ├── CategoryRepository.java
+│   │   │   │   ├── ExpenseRepository.java
+│   │   │   │   ├── IncomeRepository.java
+│   │   │   │   └── ProfileRepository.java
+│   │   │   ├── security/            # Security components
+│   │   │   │   └── JwtRequestFilter.java
+│   │   │   ├── service/             # Business logic layer
+│   │   │   │   ├── AppUserDetailsService.java
+│   │   │   │   ├── CategoryService.java
+│   │   │   │   ├── DashboardService.java
+│   │   │   │   ├── EmailService.java
+│   │   │   │   ├── ExpenseService.java
+│   │   │   │   ├── IncomeService.java
+│   │   │   │   └── ProfileService.java
+│   │   │   ├── util/                # Utility classes
+│   │   │   │   └── JwtUtil.java
+│   │   │   └── MoneymanagerApplication.java
+│   │   └── resources/
+│   │       ├── application.properties
+│   │       ├── static/
+│   │       └── templates/
+│   └── test/                        # Unit and integration tests
+├── pom.xml                          # Maven dependencies
+└── README.md
+```
+
+## 🔑 Authentication Flow
+
+1. **Registration**: User registers with email and password
+2. **Email Verification**: Activation link sent to user's email
+3. **Account Activation**: User clicks activation link to enable account
+4. **Login**: User authenticates with credentials
+5. **JWT Token**: Server issues JWT token upon successful authentication
+6. **Protected Routes**: Include JWT token in `Authorization` header for subsequent requests
+   ```
+   Authorization: Bearer <your_jwt_token>
+   ```
+
+## 🗃️ Database Schema
+
+The application uses the following main entities:
+
+### ProfileEntity
+- User profile information
+- Authentication credentials
+- Account activation status
+
+### CategoryEntity
+- Category name and type
+- User association
+- Transaction categorization
+
+### ExpenseEntity
+- Expense details (amount, date, description)
+- Category association
+- User ownership
+
+### IncomeEntity
+- Income details (amount, date, source)
+- Category association
+- User ownership
+
+## 🔒 Security Features
+
+1. **Password Encryption**: All passwords are hashed using BCrypt before storage
+2. **JWT Authentication**: Stateless authentication with token expiration
+3. **CORS Protection**: Configured CORS policy for secure cross-origin requests
+4. **SQL Injection Prevention**: JPA/Hibernate parameterized queries
+5. **Role-Based Access**: User-specific data access control
+6. **Session Management**: Stateless REST API design
+
+## 📊 Data Export
+
+Export your financial data to Excel format for:
+- Personal record keeping
+- Tax preparation
+- Financial analysis
+- Budget planning
+
+## 🌟 Best Practices Implemented
+
+- ✅ **Layered Architecture**: Clear separation of concerns (Controller → Service → Repository)
+- ✅ **DTO Pattern**: Prevents over-exposure of entity details
+- ✅ **Dependency Injection**: Constructor-based injection with Lombok
+- ✅ **RESTful Design**: Standard HTTP methods and status codes
+- ✅ **Exception Handling**: Centralized error handling
+- ✅ **Code Quality**: Clean code principles with Lombok annotations
+- ✅ **Security First**: Industry-standard authentication and authorization
+- ✅ **Configuration Management**: Externalized configuration properties
+
+## 📈 Future Enhancements
+
+- Budget planning and alerts integrated with AI
+- Multi-currency support
+- Financial goals tracking
+- Bill reminders and notifications
+
+## 🤝 Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+1. Fork the repository
+2. Create your feature branch
+3. Commit your changes
+4. Push to the branch
+5. Open a Pull Request
+
+## 📝 License
+
+This project is licensed under the MIT License - see the LICENSE file for details.
+
+## 👤 Author
+
+**The Phong**
+
+- GitHub: [@thephong](https://github.com/tvuo0007)
+- Project: Money Manager Backend with Spring Boot 4.0 and MySQL 8.0+
+
+## 📧 Contact
+
+For any questions or suggestions, please reach out through GitHub issues or email.
+
+---
+
+⭐ If you find this project useful, please consider giving it a star! Project is not yet done...

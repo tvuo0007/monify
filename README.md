@@ -168,58 +168,66 @@ The API will start running at `http://localhost:8080/api/v1.0`
 ## 🏗️ Project Structure
 
 ```
-moneymanager/
-├── src/
-│   ├── main/
-│   │   ├── java/com/thephong/moneymanager/
-│   │   │   ├── config/              # Security and application configurations
-│   │   │   │   └── SecurityConfig.java
-│   │   │   ├── controller/          # REST API controllers
-│   │   │   │   ├── CategoryController.java
-│   │   │   │   ├── DashboardController.java
-│   │   │   │   ├── ExpenseController.java
-│   │   │   │   ├── FilterController.java
-│   │   │   │   ├── HomeController.java
-│   │   │   │   ├── IncomeController.java
-│   │   │   │   └── ProfileController.java
-│   │   │   ├── dto/                 # Data Transfer Objects
-│   │   │   │   ├── AuthDTO.java
-│   │   │   │   ├── CategoryDTO.java
-│   │   │   │   ├── ExpenseDTO.java
-│   │   │   │   ├── FilterDTO.java
-│   │   │   │   ├── IncomeDTO.java
-│   │   │   │   ├── ProfileDTO.java
-│   │   │   │   └── RecentTransactionDTO.java
-│   │   │   ├── entity/              # JPA Entities
-│   │   │   │   ├── CategoryEntity.java
-│   │   │   │   ├── ExpenseEntity.java
-│   │   │   │   ├── IncomeEntity.java
-│   │   │   │   └── ProfileEntity.java
-│   │   │   ├── repository/          # Data access layer
-│   │   │   │   ├── CategoryRepository.java
-│   │   │   │   ├── ExpenseRepository.java
-│   │   │   │   ├── IncomeRepository.java
-│   │   │   │   └── ProfileRepository.java
-│   │   │   ├── security/            # Security components
-│   │   │   │   └── JwtRequestFilter.java
-│   │   │   ├── service/             # Business logic layer
-│   │   │   │   ├── AppUserDetailsService.java
-│   │   │   │   ├── CategoryService.java
-│   │   │   │   ├── DashboardService.java
-│   │   │   │   ├── EmailService.java
-│   │   │   │   ├── ExpenseService.java
-│   │   │   │   ├── IncomeService.java
-│   │   │   │   └── ProfileService.java
-│   │   │   ├── util/                # Utility classes
-│   │   │   │   └── JwtUtil.java
-│   │   │   └── MoneymanagerApplication.java
-│   │   └── resources/
-│   │       ├── application.properties
-│   │       ├── static/
-│   │       └── templates/
-│   └── test/                        # Unit and integration tests
-├── pom.xml                          # Maven dependencies
-└── README.md
+├── 📄 pom.xml
+├── 📜 README.md
+├── 📁 src
+│ ├── 📁 main
+│ │ ├── 📁 java
+│ │ │ ├── 📁 com
+│ │ │ │ ├── 📁 thephong
+│ │ │ │ │ ├── 📁 moneymanager
+│ │ │ │ │ │ ├── 📁 config
+│ │ │ │ │ │ │ ├── 📄 SecurityConfig.java
+│ │ │ │ │ │ ├── 📁 controller
+│ │ │ │ │ │ │ ├── 📄 CategoryController.java
+│ │ │ │ │ │ │ ├── 📄 DashboardController.java
+│ │ │ │ │ │ │ ├── 📄 ExpenseController.java
+│ │ │ │ │ │ │ ├── 📄 FilterController.java
+│ │ │ │ │ │ │ ├── 📄 HomeController.java
+│ │ │ │ │ │ │ ├── 📄 IncomeController.java
+│ │ │ │ │ │ │ ├── 📄 ProfileController.java
+│ │ │ │ │ │ ├── 📁 dto
+│ │ │ │ │ │ │ ├── 📄 AuthDTO.java
+│ │ │ │ │ │ │ ├── 📄 CategoryDTO.java
+│ │ │ │ │ │ │ ├── 📄 ExpenseDTO.java
+│ │ │ │ │ │ │ ├── 📄 FilterDTO.java
+│ │ │ │ │ │ │ ├── 📄 IncomeDTO.java
+│ │ │ │ │ │ │ ├── 📄 ProfileDTO.java
+│ │ │ │ │ │ │ ├── 📄 RecentTransactionDTO.java
+│ │ │ │ │ │ ├── 📁 entity
+│ │ │ │ │ │ │ ├── 📄 CategoryEntity.java
+│ │ │ │ │ │ │ ├── 📄 ExpenseEntity.java
+│ │ │ │ │ │ │ ├── 📄 IncomeEntity.java
+│ │ │ │ │ │ │ ├── 📄 ProfileEntity.java
+│ │ │ │ │ │ ├── 📄 MoneymanagerApplication.java
+│ │ │ │ │ │ ├── 📁 repository
+│ │ │ │ │ │ │ ├── 📄 CategoryRepository.java
+│ │ │ │ │ │ │ ├── 📄 ExpenseRepository.java
+│ │ │ │ │ │ │ ├── 📄 IncomeRepository.java
+│ │ │ │ │ │ │ ├── 📄 ProfileRepository.java
+│ │ │ │ │ │ ├── 📁 security
+│ │ │ │ │ │ │ ├── 📄 JwtRequestFilter.java
+│ │ │ │ │ │ ├── 📁 service
+│ │ │ │ │ │ │ ├── 📄 AppUserDetailsService.java
+│ │ │ │ │ │ │ ├── 📄 CategoryService.java
+│ │ │ │ │ │ │ ├── 📄 DashboardService.java
+│ │ │ │ │ │ │ ├── 📄 EmailService.java
+│ │ │ │ │ │ │ ├── 📄 ExpenseService.java
+│ │ │ │ │ │ │ ├── 📄 IncomeService.java
+│ │ │ │ │ │ │ ├── 📄 ProfileService.java
+│ │ │ │ │ │ ├── 📁 util
+│ │ │ │ │ │ │ ├── 📄 JwtUtil.java
+│ │ ├── 📁 resources
+│ │ │ ├── 📄 application.properties
+│ │ │ ├── 📁 static
+│ │ │ ├── 📁 templates
+│ ├── 📁 test
+│ │ ├── 📁 java
+│ │ │ ├── 📁 com
+│ │ │ │ ├── 📁 thephong
+│ │ │ │ │ ├── 📁 moneymanager
+│ │ │ │ │ │ ├── 📄 MoneymanagerApplicationTests.java
+
 ```
 
 ## 🔑 Authentication Flow

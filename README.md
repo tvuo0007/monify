@@ -1,11 +1,10 @@
 # 💰 Money Manager - Backend API
 
-A robust and secure RESTful API for personal finance management, built with Spring Boot 4.0 and modern Java practices. This backend service provides comprehensive expense and income tracking capabilities with JWT-based authentication, email notifications, and data export functionality.
+A robust and secure RESTful API for personal finance management, built with Spring Boot 4.0 and modern Java practices. This backend service provides comprehensive expense and income tracking capabilities with JWT-based authentication, email notifications daily, data export functionality, and AI integrated for managing incomes and expenses for automation (not yet implemented).
 
 [![Java](https://img.shields.io/badge/Java-25-orange?style=flat&logo=java)](https://www.oracle.com/java/)
 [![Spring Boot](https://img.shields.io/badge/Spring%20Boot-4.0.1-brightgreen?style=flat&logo=spring)](https://spring.io/projects/spring-boot)
 [![MySQL](https://img.shields.io/badge/MySQL-8.0+-blue?style=flat&logo=mysql)](https://www.mysql.com/)
-[![License](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
 ## 🎯 Key Features
 
@@ -69,38 +68,37 @@ Before running this application, ensure you have the following installed:
 ### 1. Clone the Repository
 ```bash
 git clone <repository-url>
-cd moneymanager
 ```
 
 ### 2. Database Setup
 Create a MySQL database:
 ```sql
-CREATE DATABASE moneymanager;
+CREATE DATABASE <your-db-name>;
 ```
 
 ### 3. Configure Application Properties
 Update `src/main/resources/application.properties`:
 ```properties
 # Database Configuration
-spring.datasource.url=jdbc:mysql://localhost:3306/moneymanager
+spring.datasource.url=your-db-connection
 spring.datasource.username=your_username
 spring.datasource.password=your_password
 
 # Email Configuration (using Brevo SMTP)
-spring.mail.username=${BREVO_USERNAME}
-spring.mail.password=${BREVO_PASSWORD}
-spring.mail.properties.mail.smtp.from=${BREVO_FROM_EMAIL}
+spring.mail.username=your-mail-username
+spring.mail.password=your-mail-password
+spring.mail.properties.mail.smtp.from=your-sender-mail
 
 # JWT Secret Key (generate your own secret)
 jwt.secret=your_jwt_secret_key
 ```
 
 ### 4. Set Environment Variables
-Create environment variables for sensitive data:
+Create environment variables for sensitive data in .env file:
 ```bash
-export BREVO_USERNAME=your_email_username
-export BREVO_PASSWORD=your_email_password
-export BREVO_FROM_EMAIL=your_sender_email
+BREVO_USERNAME=your_email_username
+BREVO_PASSWORD=your_email_password
+BREVO_FROM_EMAIL=your_sender_email
 ```
 
 ### 5. Build the Application
@@ -113,7 +111,7 @@ mvn clean install
 mvn spring-boot:run
 ```
 
-The API will start running at `http://localhost:8080/api/v1.0`
+The API will start running at `http://localhost:8080/api/v1.0` on your local computer
 
 ## 📡 API Endpoints
 
@@ -122,7 +120,7 @@ The API will start running at `http://localhost:8080/api/v1.0`
 |--------|----------|-------------|---------------|
 | POST | `/api/v1.0/register` | Register new user | ❌ |
 | POST | `/api/v1.0/login` | User login | ❌ |
-| POST | `/api/v1.0/activate` | Activate account | ❌ |
+| GET | `/api/v1.0/activate` | Activate account | ❌ |
 | GET | `/api/v1.0/status` | API health check | ❌ |
 
 ### Dashboard
@@ -135,30 +133,22 @@ The API will start running at `http://localhost:8080/api/v1.0`
 |--------|----------|-------------|---------------|
 | POST | `/api/v1.0/expenses` | Add new expense | ✅ |
 | GET | `/api/v1.0/expenses` | Get all expenses | ✅ |
-| GET | `/api/v1.0/expenses/{id}` | Get expense by ID | ✅ |
 | DELETE | `/api/v1.0/expenses/{id}` | Delete expense | ✅ |
 
 ### Income
 | Method | Endpoint | Description | Auth Required |
 |--------|----------|-------------|---------------|
-| POST | `/api/v1.0/income` | Add new income | ✅ |
-| GET | `/api/v1.0/income` | Get all income | ✅ |
-| GET | `/api/v1.0/income/{id}` | Get income by ID | ✅ |
-| DELETE | `/api/v1.0/income/{id}` | Delete income | ✅ |
+| POST | `/api/v1.0/incomes` | Add new income | ✅ |
+| GET | `/api/v1.0/incomes` | Get all income | ✅ |
+| DELETE | `/api/v1.0/incomes/{id}` | Delete income | ✅ |
 
 ### Categories
 | Method | Endpoint | Description | Auth Required |
 |--------|----------|-------------|---------------|
 | POST | `/api/v1.0/categories` | Create category | ✅ |
 | GET | `/api/v1.0/categories` | Get all categories | ✅ |
-| GET | `/api/v1.0/categories/{id}` | Get category by ID | ✅ |
+| GET | `/api/v1.0/categories/{type}` | Get category by type | ✅ |
 | PUT | `/api/v1.0/categories/{id}` | Update category | ✅ |
-
-### Profile
-| Method | Endpoint | Description | Auth Required |
-|--------|----------|-------------|---------------|
-| GET | `/api/v1.0/profile` | Get user profile | ✅ |
-| PUT | `/api/v1.0/profile` | Update profile | ✅ |
 
 ### Filters
 | Method | Endpoint | Description | Auth Required |
@@ -310,10 +300,6 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 3. Commit your changes
 4. Push to the branch
 5. Open a Pull Request
-
-## 📝 License
-
-This project is licensed under the MIT License - see the LICENSE file for details.
 
 ## 👤 Author
 

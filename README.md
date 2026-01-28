@@ -155,6 +155,12 @@ The API will start running at `http://localhost:8080/api/v1.0` on your local com
 |--------|----------|-------------|---------------|
 | POST | `/api/v1.0/filter` | Filter transactions | ✅ |
 
+### Excel Export
+| Method | Endpoint | Description | Auth Required |
+|--------|----------|-------------|---------------|
+| GET | `/api/v1.0/excel/download/incomes` | Download current month incomes as Excel file | ✅ |
+| GET | `/api/v1.0/excel/download/expenses` | Download current month expenses as Excel file | ✅ |
+
 ## 🏗️ Project Structure
 
 ```
@@ -286,24 +292,13 @@ Export your financial data to Excel format for:
 
 ## 📈 Future Enhancements
 
-- Budget planning and alerts integrated with AI
+- Managing expenses and incomes with AI
 - Multi-currency support
 - Financial goals tracking
-- Bill reminders and notifications
-
-## 🤝 Contributing
-
-Contributions are welcome! Please feel free to submit a Pull Request.
-
-1. Fork the repository
-2. Create your feature branch
-3. Commit your changes
-4. Push to the branch
-5. Open a Pull Request
 
 ## 👤 Author
 
-**The Phong**
+**The Phong Vuong**
 
 - GitHub: [@thephong](https://github.com/tvuo0007)
 - Project: Money Manager Backend with Spring Boot 4.0 and MySQL 8.0+

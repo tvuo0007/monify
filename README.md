@@ -1,4 +1,4 @@
-# 💰 Money Manager - Backend API
+# 💰 Monify - Backend API
 
 A robust and secure RESTful API for personal finance management, built with Spring Boot 4.0 and modern Java practices. This backend service provides comprehensive expense and income tracking capabilities with JWT-based authentication, email notifications daily, data export functionality, and AI integrated for managing incomes and expenses for automation (not yet implemented).
 
@@ -111,7 +111,7 @@ mvn clean install
 mvn spring-boot:run
 ```
 
-The API will start running at `http://localhost:8080/api/v1.0` on your local computer
+The API will start running at `http://localhost:8080/api/v1.0` on your local computer. I will deploy this project in the future.
 
 ## 📡 API Endpoints
 
@@ -301,7 +301,7 @@ Export your financial data to Excel format for:
 **The Phong Vuong**
 
 - GitHub: [@thephong](https://github.com/tvuo0007)
-- Project: Money Manager Backend with Spring Boot 4.0 and MySQL 8.0+
+- Project: Monify Backend with Spring Boot 4.0 and MySQL 8.0+
 
 ## 📧 Contact
 

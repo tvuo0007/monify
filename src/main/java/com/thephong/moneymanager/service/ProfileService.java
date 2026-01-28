@@ -34,7 +34,7 @@ public class ProfileService {
         newProfile = profileRepository.save(newProfile);
         // Send activation email
         String activationLink = "http://localhost:8080/api/v1.0/activate?token=" + newProfile.getActivationToken();
-        String subject = "Activate your Money Manger account";
+        String subject = "Activate your Monify account";
         String body = "Click on the following link to activate your account: " + activationLink;
         emailService.sendEmail(newProfile.getEmail(), subject, body);
         return toDTO(newProfile);

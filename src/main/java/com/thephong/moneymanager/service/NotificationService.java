@@ -31,9 +31,9 @@ public class NotificationService {
         List<ProfileEntity> profiles = profileRepository.findAll();
         for (ProfileEntity profile : profiles) {
             String body = "Hi " + profile.getFullName() + ",<br><br>"
-                    + "This is a friendly reminder to add your income and expenses for today in Money Manager.<br><br>"
-                    + "<a href="+frontendUrl+" style='display:inline-block;padding:10px 20px;background-color:#4CAF50;color:#fff;text-decoration:none;border-radius:5px;font-weight:bold;'>Go to Money Manager</a>"
-                    + "<br><br>Best regards,<br>Backend Team";
+                    + "This is a friendly reminder to add your income and expenses for today in Monify.<br><br>"
+                    + "<a href="+frontendUrl+" style='display:inline-block;padding:10px 20px;background-color:#4CAF50;color:#fff;text-decoration:none;border-radius:5px;font-weight:bold;'>Go to Monify</a>"
+                    + "<br><br>Best regards,<br>Monify Team";
             emailService.sendEmail(profile.getEmail(), "Daily Income and Expense Reminder", body);
         }
         log.info("Job completed: Daily income and expense reminders sent");
@@ -59,7 +59,7 @@ public class NotificationService {
                     table.append("</tr>");
                 }
                 table.append("</table>");
-                String body = "Hi " + profile.getFullName() + ",<br/><br/> Here is a summary of your expenses for today:<br/><br/>"+table+"<br/><br/>Best regards,<br/>Backend Team";
+                String body = "Hi " + profile.getFullName() + ",<br/><br/> Here is a summary of your expenses for today:<br/><br/>"+table+"<br/><br/>Best regards,<br/>Monify Team";
                 emailService.sendEmail(profile.getEmail(), "Your daily Expense summary", body);
             }
         }

@@ -94,14 +94,15 @@ jwt.secret=your_jwt_secret_key
 
 # Front-end URL (for demo email sent)
 app.frontend.url=your_frontend_url
+app.base.url=your_base_url
 ```
 
 ### 4. Set Environment Variables
 Create environment variables for sensitive data in .env file:
 ```bash
-BREVO_USERNAME=your_email_username
-BREVO_PASSWORD=your_email_password
-BREVO_FROM_EMAIL=your_sender_email
+MAIL_USERNAME=your_email_username
+MAIL_PASSWORD=your_email_password
+MAIL_FROM_EMAIL=your_sender_email
 ```
 
 ### 5. Build the Application
@@ -284,8 +285,7 @@ The application uses the following main entities:
 2. **JWT Authentication**: Stateless authentication with token expiration
 3. **CORS Protection**: Configured CORS policy for secure cross-origin requests
 4. **SQL Injection Prevention**: JPA/Hibernate parameterized queries
-5. **Role-Based Access**: User-specific data access control
-6. **Session Management**: Stateless REST API design
+5. **Session Management**: Stateless REST API design
 
 ## Data Export
 
@@ -294,17 +294,6 @@ Export your financial data to Excel format for:
 - Tax preparation
 - Financial analysis
 - Budget planning
-
-## Best Practices Implemented
-
-- ✅ **Layered Architecture**: Clear separation of concerns (Controller → Service → Repository)
-- ✅ **DTO Pattern**: Prevents over-exposure of entity details
-- ✅ **Dependency Injection**: Constructor-based injection with Lombok
-- ✅ **RESTful Design**: Standard HTTP methods and status codes
-- ✅ **Exception Handling**: Centralized error handling
-- ✅ **Code Quality**: Clean code principles with Lombok annotations
-- ✅ **Security First**: Industry-standard authentication and authorization
-- ✅ **Configuration Management**: Externalized configuration properties
 
 ## Future Enhancements
 
@@ -318,11 +307,3 @@ Export your financial data to Excel format for:
 
 - GitHub: [@thephong](https://github.com/tvuo0007)
 - Project: Monify Backend with Spring Boot 4.0 and MySQL 8.0+
-
-## Contact
-
-For any questions or suggestions, please reach out through GitHub issues or email.
-
----
-
-⭐ If you find this project useful, please consider giving it a star!

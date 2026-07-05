@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
@@ -37,4 +38,8 @@ public interface ExpenseRepository extends JpaRepository<ExpenseEntity, Long>{
     // Queries for finding expenses before a specific date
     @Query("select e from ExpenseEntity e join fetch e.category where e.profile.id = :profileId and e.date <= :date")
     List<ExpenseEntity> findByProfileIdAndDateLessThanEqual(Long profileId, LocalDate date);
+
+    @Modifying
+    @Query("delete from ExpenseEntity e where e.profile.id = :profileId")
+    void deleteByProfileId(@Param("profileId") Long profileId);
 }

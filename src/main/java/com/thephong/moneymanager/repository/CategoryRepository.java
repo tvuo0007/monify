@@ -4,7 +4,9 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import com.thephong.moneymanager.entity.CategoryEntity;
 
@@ -19,4 +21,8 @@ public interface CategoryRepository extends JpaRepository<CategoryEntity, Long>{
     List<CategoryEntity> findByTypeAndProfileId(String type, Long profileId);
 
     Boolean existsByNameAndProfileId(String name, Long profileId);
+
+    @Modifying
+    @Query("delete from CategoryEntity c where c.profile.id = :profileId")
+    void deleteByProfileId(@Param("profileId") Long profileId);
 }

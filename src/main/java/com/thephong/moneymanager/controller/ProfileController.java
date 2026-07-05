@@ -4,6 +4,7 @@ import java.util.Map;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.thephong.moneymanager.dto.AuthDTO;
+import com.thephong.moneymanager.dto.DeleteAccountDTO;
 import com.thephong.moneymanager.dto.ProfileDTO;
 import com.thephong.moneymanager.service.ProfileService;
 
@@ -35,6 +37,18 @@ public class ProfileController {
         }
         else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Activation token not found or already used");
+        }
+    }
+
+    @DeleteMapping("/account")
+    public ResponseEntity<?> deleteAccount(@RequestBody DeleteAccountDTO deleteAccountDTO) {
+        try {
+            profileService.deleteAccount(deleteAccountDTO.getPassword());
+            return ResponseEntity.noContent().build();
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Map.of(
+                    "message", e.getMessage()
+            ));
         }
     }
 

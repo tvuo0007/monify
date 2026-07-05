@@ -173,6 +173,10 @@ export interface LoginResponse {
   user: Profile;
 }
 
+export interface DeleteAccountRequest {
+  password: string;
+}
+
 export interface ErrorResponse {
   message: string;
 }
@@ -425,6 +429,58 @@ Authenticate and receive a JWT.
 {
   "message": "Invalid email or password"
 }
+```
+
+---
+
+#### `DELETE /account`
+
+Permanently delete the authenticated user's account and all associated data (expenses, incomes, and categories). Requires the user's current password for confirmation.
+
+**Auth:** Required
+
+**Request body:**
+
+```json
+{
+  "password": "securePassword123"
+}
+```
+
+| Field | Required | Notes |
+|---|---|---|
+| `password` | Yes | Must match the authenticated user's current password |
+
+**Response `204`:** No content
+
+**Response `400`** (missing or invalid password):
+
+```json
+{
+  "message": "Invalid password"
+}
+```
+
+**Side effects:**
+- Deletes all expenses owned by the user
+- Deletes all incomes owned by the user
+- Deletes all categories owned by the user
+- Deletes the user profile
+
+> **Important:** This action is irreversible. After a successful delete, clear the stored JWT on the client and redirect the user to the login or landing page.
+
+**React example:**
+
+```typescript
+const deleteAccount = async (password: string) => {
+  await apiRequest<void>('/account', {
+    method: 'DELETE',
+    body: JSON.stringify({ password }),
+  });
+  localStorage.removeItem('token');
+  localStorage.removeItem('user');
+  window.location.href = '/login';
+};
 ```
 
 ---
@@ -1042,6 +1098,7 @@ Configure `BASE_URL` to your React app URL and have the frontend route call the 
 | `/categories` | Category management | `GET /categories`, `POST /categories`, `PUT /categories/{id}` | Protected |
 | `/transactions` | Filtered history | `POST /filter` | Protected |
 | `/reports` | Export & email | Excel download + email endpoints | Protected |
+| `/settings` | Account settings | `DELETE /account` | Protected |
 
 ### Typical user flows
 
@@ -1113,7 +1170,7 @@ The backend allows all origins with credentials. When using `fetch`, set `creden
 
 ### No profile update endpoint
 
-There is currently no API to update profile (`fullName`, `profileImageUrl`) or change password after registration.
+There is currently no API to update profile (`fullName`, `profileImageUrl`) or change password after registration. Use `DELETE /account` to permanently remove the account and all associated data.
 
 ---
 
@@ -1126,6 +1183,7 @@ There is currently no API to update profile (`fullName`, `profileImageUrl`) or c
 | `POST` | `/register` | No | Register new user |
 | `GET` | `/activate?token=` | No | Activate account |
 | `POST` | `/login` | No | Login, get JWT |
+| `DELETE` | `/account` | Yes | Delete account and all user data (password required) |
 | `GET` | `/dashboard` | Yes | Dashboard summary |
 | `POST` | `/categories` | Yes | Create category |
 | `GET` | `/categories` | Yes | List all categories |

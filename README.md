@@ -125,6 +125,7 @@ The API will start running at `http://localhost:8080/api/v1.0` on your local com
 | POST | `/api/v1.0/register` | Register new user | ❌ |
 | POST | `/api/v1.0/login` | User login | ❌ |
 | GET | `/api/v1.0/activate` | Activate account | ❌ |
+| DELETE | `/api/v1.0/account` | Delete account and all user data (password confirmation required) | ✅ |
 | GET | `/api/v1.0/status` | API health check | ❌ |
 
 ### Dashboard

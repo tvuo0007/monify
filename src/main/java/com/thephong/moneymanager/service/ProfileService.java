@@ -11,10 +11,14 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.thephong.moneymanager.dto.AuthDTO;
 import com.thephong.moneymanager.dto.ProfileDTO;
 import com.thephong.moneymanager.entity.ProfileEntity;
+import com.thephong.moneymanager.repository.CategoryRepository;
+import com.thephong.moneymanager.repository.ExpenseRepository;
+import com.thephong.moneymanager.repository.IncomeRepository;
 import com.thephong.moneymanager.repository.ProfileRepository;
 import com.thephong.moneymanager.util.JwtUtil;
 
@@ -24,6 +28,9 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class ProfileService {
     private final ProfileRepository profileRepository;
+    private final ExpenseRepository expenseRepository;
+    private final IncomeRepository incomeRepository;
+    private final CategoryRepository categoryRepository;
     private final EmailService emailService;
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
@@ -118,5 +125,21 @@ public class ProfileService {
         } catch (Exception e) {
             throw new RuntimeException("Invalid email or password");
         }
+    }
+
+    @Transactional
+    public void deleteAccount(String password) {
+        ProfileEntity profile = getCurrentProfile();
+        if (password == null || password.isBlank()) {
+            throw new RuntimeException("Password is required");
+        }
+        if (!passwordEncoder.matches(password, profile.getPassword())) {
+            throw new RuntimeException("Invalid password");
+        }
+        Long profileId = profile.getId();
+        expenseRepository.deleteByProfileId(profileId);
+        incomeRepository.deleteByProfileId(profileId);
+        categoryRepository.deleteByProfileId(profileId);
+        profileRepository.delete(profile);
     }
 }
